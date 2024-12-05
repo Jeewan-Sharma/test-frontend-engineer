@@ -1,33 +1,47 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { IProduct } from "../types/IProducts";
 
-const useFetchProducts = (url: string) => {
+type FetchDataProps = {
+  url: string;
+  page: number;
+  limit: number;
+};
+
+const useFetchProducts = ({ url, page, limit }: FetchDataProps) => {
   const [data, setData] = useState<IProduct[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       try {
-        const response = await axios.get<IProduct[]>(url);
-        setData(response.data);
-      } catch (err: unknown) {
-        if (axios.isAxiosError(err)) {
-          setError(err.response?.data.message || "Something went wrong");
-        } else {
-          setError("An unknown error occurred");
+        setLoading(true);
+        const offset = (page - 1) * limit;
+        const response = await fetch(`${url}?limit=${limit}&offset=${offset}`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
+
+        const result = await response.json();
+
+        if (result.length < limit) {
+          setHasMore(false); // No more data available
+        }
+
+        setData((prevData) => [...prevData, ...result]); // Append data
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Error fetching data");
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [url]);
+  }, [page, url, limit]); // Re-fetch data when page or limit changes
 
-  return { data, error, loading };
+  return { data, loading, error, hasMore };
 };
 
 export default useFetchProducts;

@@ -1,15 +1,27 @@
 "use client";
+import Icons from "@/app/components/Icons";
 import ProductCard from "@/app/components/productCard";
 import useFetchProducts from "@/app/hooks/useFetchData";
-import React from "react";
+import useInfiniteScroll from "@/app/hooks/useInfiniteScroll";
+import React, { useRef, useState } from "react";
 
 const ProductList = () => {
+  const [page, setPage] = useState<number>(1);
+  const limit = 12;
+  const listRef = useRef<HTMLDivElement>(null);
+
   const {
     data: products,
-    error,
     loading,
-  } = useFetchProducts("https://fakestoreapi.com/products");
-  if (loading) return <p>Loading...</p>;
+    error,
+    hasMore,
+  } = useFetchProducts({
+    url: "https://api.escuelajs.co/api/v1/products",
+    page,
+    limit,
+  });
+
+  useInfiniteScroll(loading, hasMore, setPage, listRef);
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -17,7 +29,7 @@ const ProductList = () => {
       <p className="text-center text-xl font-bold text-gray-700">
         All Products
       </p>
-      <div className="flex flex-wrap my-3">
+      <div ref={listRef} className="flex flex-wrap my-3">
         {products.map((item) => (
           <ProductCard
             key={item.id}
@@ -26,11 +38,19 @@ const ProductList = () => {
               title: item.title,
               price: item.price,
               description: item.description,
-              image: item.image,
+              image: item.category.image,
             }}
           />
         ))}
       </div>
+      {loading && (
+        <div className="p-4 flex gap-2 justify-center items-center">
+          <div className="text-primary_color animate-spin">{Icons.Loading}</div>
+          <p className="text-xl font-bold text-primary_color text-center">
+            Loading...
+          </p>
+        </div>
+      )}
     </div>
   );
 };
