@@ -1,7 +1,7 @@
-import Button from "../../components/Button";
+import Button from "@/app/components/Button";
 import Image from "next/image";
 import React from "react";
-import Icons from "../../components/Icons";
+import Icons from "@/app/components/Icons";
 
 const Banner = () => {
   return (

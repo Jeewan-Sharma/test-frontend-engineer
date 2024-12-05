@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "./layout";
 import Banner from "./Home/Banner";
 import Categories from "./Home/Categories";
+import ProductList from "./Home/ProductList";
 
 const MainIndex = () => {
   return (
@@ -9,15 +10,7 @@ const MainIndex = () => {
       <Layout>
         <Banner />
         <Categories />
-        <p>text</p>
-        <p>text</p>
-        <p>text</p>
-        <p>text</p>
-        <p>text</p>
-        <p>text</p>
-        <p>text</p>
-        <p>text</p> <p>text</p> <p>text</p> <p>text</p>
-        <p>text</p>
+        <ProductList />
       </Layout>
     </div>
   );
