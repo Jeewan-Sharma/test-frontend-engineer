@@ -3,7 +3,7 @@ import React from "react";
 interface ButtonProps {
   name: string;
   type: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({ name, type, icon }) => {
