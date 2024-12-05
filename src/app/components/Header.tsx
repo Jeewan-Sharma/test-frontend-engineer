@@ -3,7 +3,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div className="flex justify-between items-center sticky top-0 py-3 px-3 md:px-8 lg:px-16">
+    <div className="flex justify-between items-center sticky top-0 py-3 px-3 md:px-8 lg:px-16 bg-white">
       <div className="flex gap-8 items-center">
         <Image src="/images/picknclick.png" alt="logo" width={90} height={90} />
         <div className="hidden lg:flex gap-8 ">

@@ -4,7 +4,7 @@
 
 @layer base {
   p {
-    @apply text-gray-600;
+    @apply text-gray-700;
   }
   .btn-primary p {
     @apply text-white;
@@ -13,10 +13,13 @@
 
 @layer utilities {
   .hover-text-color {
-    @apply text-gray-600 hover:text-secondary_color transition-all duration-500;
+    @apply text-gray-700 hover:text-secondary_color transition-all duration-500;
   }
   .btn-primary {
     @apply bg-primary_color hover:bg-secondary_color px-4 py-2 rounded-lg text-white font-bold transition-all duration-500;
+  }
+  .boxShadow {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   }
 }
 
