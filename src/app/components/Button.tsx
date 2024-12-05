@@ -3,7 +3,7 @@ import React from "react";
 interface ButtonProps {
   name: string;
   type: string;
-  icon: JSX.Element;
+  icon: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({ name, type, icon }) => {
@@ -11,7 +11,7 @@ const Button: React.FC<ButtonProps> = ({ name, type, icon }) => {
     <button className={`${type}`}>
       <div className="flex items-center">
         <p>{name}</p>
-        {icon}
+        <div>{icon}</div>
       </div>
     </button>
   );
