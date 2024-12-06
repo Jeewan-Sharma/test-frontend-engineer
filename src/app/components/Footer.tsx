@@ -6,8 +6,8 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <div>
-      <div className="px-3 md:px-8 lg:px-16 py-14 bg-[#25283a] flex flex-wrap">
-        <div className="w-2/5">
+      <div className="px-3 md:px-8 lg:px-16 space-y-8 py-14 bg-[#25283a] flex flex-wrap">
+        <div className="w-full lg:w-2/5">
           <div className="flex items-center gap-3">
             <Image
               src="/images/picknclick.png"
@@ -43,8 +43,8 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="w-3/5 flex text-center ">
-          <div className="w-1/3">
+        <div className="w-full lg:w-3/5 flex flex-wrap text-center space-y-8">
+          <div className="w-full md:w-1/3">
             <p className="text-white font-semibold text-xl">Company</p>
             <p className="mt-2 text-white">About Us</p>
             <p className="text-white">Meet Our Team</p>
@@ -52,7 +52,7 @@ const Footer = () => {
             <p className="text-white">Privacy Policies</p>
             <p className="text-white">Contact Us</p>
           </div>
-          <div className="w-1/3">
+          <div className="w-full md:w-1/3">
             <p className="text-white font-semibold text-xl">Categories</p>
             <p className="mt-2 text-white">Men</p>
             <p className="text-white">Women</p>
@@ -61,7 +61,7 @@ const Footer = () => {
             <p className="text-white">Shoes</p>
             <p className="text-white">Electronics</p>
           </div>
-          <div className="w-1/3">
+          <div className="w-full md:w-1/3">
             <p className="text-white font-semibold text-xl">Contact Us</p>
             <p className="mt-2 text-white">Address: Blacktown NSW</p>
             <p className="text-white">Phone: 0425 456 262</p>

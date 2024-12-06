@@ -16,7 +16,7 @@ const ProductList = () => {
     error,
     hasMore,
   } = useFetchProducts({
-    url: "https://api.escuelajs.co/api/v1/products",
+    url: "https://dummyjson.com/products",
     page,
     limit,
   });
@@ -38,7 +38,7 @@ const ProductList = () => {
               title: item.title,
               price: item.price,
               description: item.description,
-              image: item.category.image,
+              image: item.thumbnail,
             }}
           />
         ))}

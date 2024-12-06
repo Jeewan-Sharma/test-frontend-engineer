@@ -1,27 +1,35 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Header = () => {
   return (
     <div className="flex justify-between items-center sticky top-0 py-3 px-3 md:px-8 lg:px-16 bg-white z-50">
       <div className="flex gap-8 items-center">
-        <Image src="/images/picknclick.png" alt="logo" width={90} height={90} />
+        <Link href="/">
+          <Image
+            src="/images/picknclick.png"
+            alt="logo"
+            width={90}
+            height={90}
+          />
+        </Link>
         <div className="hidden lg:flex gap-8 ">
-          <p className="text-lg font-bold hover-text-color cursor-pointer">
-            Home
-          </p>
-          <p className="text-lg font-bold hover-text-color cursor-pointer">
-            Categories
-          </p>
-          <p className="text-lg font-bold hover-text-color cursor-pointer">
-            Sale
-          </p>
-          <p className="text-lg font-bold hover-text-color cursor-pointer">
-            About Us
-          </p>
-          <p className="text-lg font-bold hover-text-color cursor-pointer">
-            Blog
-          </p>
+          <Link href="/">
+            <p className="text-lg font-bold hover-text-color">Home</p>
+          </Link>
+          <Link href="/">
+            <p className="text-lg font-bold hover-text-color">Categories</p>
+          </Link>
+          <Link href="/">
+            <p className="text-lg font-bold hover-text-color">Sale</p>
+          </Link>
+          <Link href="/">
+            <p className="text-lg font-bold hover-text-color">About Us</p>
+          </Link>
+          <Link href="/">
+            <p className="text-lg font-bold hover-text-color">Blog</p>
+          </Link>
         </div>
       </div>
       <div className="flex gap-3">

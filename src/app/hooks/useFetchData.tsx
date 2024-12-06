@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { IProduct } from "../types/IProducts";
+import { IProduct, ApiResponse } from "@/app/types";
 
 type FetchDataProps = {
   url: string;
@@ -18,19 +18,19 @@ const useFetchProducts = ({ url, page, limit }: FetchDataProps) => {
       try {
         setLoading(true);
         const offset = (page - 1) * limit;
-        const response = await fetch(`${url}?limit=${limit}&offset=${offset}`);
+        const response = await fetch(`${url}?limit=${limit}&skip=${offset}`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const result = await response.json();
+        const result: ApiResponse = await response.json();
 
-        if (result.length < limit) {
-          setHasMore(false); // No more data available
+        if (result.products.length < limit) {
+          setHasMore(false); // if No more data available
         }
 
-        setData((prevData) => [...prevData, ...result]); // Append data
+        setData((prevData) => [...prevData, ...result.products]); // Append data
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error fetching data");
       } finally {
@@ -39,7 +39,7 @@ const useFetchProducts = ({ url, page, limit }: FetchDataProps) => {
     };
 
     fetchData();
-  }, [page, url, limit]); // Re-fetch data when page or limit changes
+  }, [page, url, limit]); // Re-fetching data when page or limit changes
 
   return { data, loading, error, hasMore };
 };

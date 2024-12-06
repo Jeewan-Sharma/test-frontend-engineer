@@ -5,7 +5,7 @@ interface ProductCardProps {
   product: {
     id: number;
     title: string;
-    price: string;
+    price: number;
     description: string;
     image: string;
   };
@@ -13,7 +13,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <div className="w-1/4 p-2">
+    <div className="w-full md:w-1/2 lg:w-1/4 p-2">
       <Link href={`/products/${product.id}`} passHref>
         <div className="rounded-lg border border-gray-400 hover:border-secondary_color cursor-pointer p-2">
           <div className="flex justify-center">
