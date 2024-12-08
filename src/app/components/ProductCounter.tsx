@@ -1,60 +1,57 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 interface CounterProps {
-  initialCount?: number;
-  onCountChange?: (count: number) => void;
+  initialCount: number;
+  onCountChange: (count: number) => void;
 }
 
 const ProductCounter: React.FC<CounterProps> = ({
-  initialCount = 1,
+  initialCount,
   onCountChange,
 }) => {
-  const min = 1;
-  const max = Infinity;
   const [count, setCount] = useState(initialCount);
 
-  const increment = () => {
-    setCount((prev) => {
-      const newCount = Math.min(max, prev + 1);
-      onCountChange?.(newCount);
-      return newCount;
-    });
-  };
+  useEffect(() => {
+    setCount(initialCount);
+  }, [initialCount]);
 
-  const decrement = () => {
-    setCount((prev) => {
-      const newCount = Math.max(min, prev - 1);
-      onCountChange?.(newCount);
-      return newCount;
-    });
-  };
+  const handleCountChange = useCallback(
+    (newCount: number) => {
+      setCount(newCount);
+      onCountChange(newCount);
+    },
+    [onCountChange]
+  );
+
+  const increment = useCallback(() => {
+    handleCountChange(count + 1);
+  }, [count, handleCountChange]);
+
+  const decrement = useCallback(() => {
+    if (count > 1) {
+      handleCountChange(count - 1);
+    }
+  }, [count, handleCountChange]);
 
   return (
     <div className="flex items-center space-x-4 p-1 border rounded-lg bg-gray-50">
-      {/* Decrement Button */}
       <button
         onClick={decrement}
         className="px-2 py-1 disabled:opacity-50"
-        disabled={count <= min}
+        disabled={count <= 1}
       >
         <p className="text-2xl">-</p>
       </button>
-
-      {/* Count Display */}
       <span className="text-lg font-medium">{count}</span>
-
-      {/* Increment Button */}
-      <button
-        onClick={increment}
-        className="px-2 py-1 disabled:opacity-50"
-        disabled={count >= max}
-      >
+      <button onClick={increment} className="px-2 py-1">
         <p className="text-2xl">+</p>
       </button>
     </div>
   );
 };
+
+ProductCounter.displayName = "ProductCounter";
 
 export default ProductCounter;

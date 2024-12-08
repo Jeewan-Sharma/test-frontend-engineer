@@ -9,11 +9,28 @@ import Button from "@/app/components/Button";
 import Ratings from "@/app/components/Ratings";
 
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { ICartItem } from "@/app/types";
+import { useCart } from "@/app/hooks/useCart";
 
 const ProductDetailsClient = ({ product }: { product: IProduct }) => {
   const [color, setColor] = useState("black");
   const [size, setSize] = useState("s");
   const [quantity, setQuantity] = useState(1);
+
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    const productToAdd: ICartItem = {
+      id: product.id,
+      item: product,
+      color,
+      size,
+      quantity,
+    };
+
+    addToCart(productToAdd);
+    alert("Item has been added to the cart.");
+  };
 
   const handleCountChange = (counter: number) => {
     setQuantity(counter);
@@ -118,7 +135,11 @@ const ProductDetailsClient = ({ product }: { product: IProduct }) => {
               initialCount={quantity}
               onCountChange={handleCountChange}
             />
-            <Button name="Add to cart" type="btn-primary" />
+            <Button
+              onClick={handleAddToCart}
+              name="Add to cart"
+              type="btn-primary"
+            />
           </div>
         </div>
       </div>
@@ -164,7 +185,7 @@ const ProductDetailsClient = ({ product }: { product: IProduct }) => {
             {product.reviews.map((review, index) => (
               <div
                 key={index}
-                className="mt-2 p-4 border rounded-lg bg-gray-200 flex flex-wrap items-center justify-between"
+                className="mt-3 p-4 border rounded-lg bg-gray-200 flex flex-wrap items-center justify-between"
               >
                 <div className="flex gap-4 align-middle">
                   <div>

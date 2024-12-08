@@ -1,7 +1,7 @@
 import { IProduct } from "./IProducts";
 
 export interface ICartItem {
-    id: string;
+    id: number;
     item: IProduct;
     color: string;
     size: string;

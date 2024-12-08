@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { IProduct, ApiResponse } from "@/app/types";
+import { useLoading } from "../context/LoadingContext";
 
 type FetchDataProps = {
   url: string;
@@ -13,10 +14,17 @@ const useFetchProducts = ({ url, page, limit }: FetchDataProps) => {
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState<boolean>(true);
 
+  const { setGlobalLoading } = useLoading();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
+        if (page === 1) {
+          setGlobalLoading(true);
+        } else {
+          setLoading(true);
+        }
+
         const offset = (page - 1) * limit;
         const response = await fetch(`${url}?limit=${limit}&skip=${offset}`);
 
@@ -30,16 +38,19 @@ const useFetchProducts = ({ url, page, limit }: FetchDataProps) => {
           setHasMore(false); // if No more data available
         }
 
-        setData((prevData) => [...prevData, ...result.products]); // Append data
+        setData((prevData) => [...prevData, ...result.products]);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error fetching data");
       } finally {
+        if (page === 1) {
+          setGlobalLoading(false);
+        }
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [page, url, limit]); // Re-fetching data when page or limit changes
+  }, [page, url, limit, setGlobalLoading]); // Re-fetching data when page or limit changes
 
   return { data, loading, error, hasMore };
 };
