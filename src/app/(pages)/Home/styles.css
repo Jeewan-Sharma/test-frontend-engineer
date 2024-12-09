@@ -1,0 +1,23 @@
+.category-box {
+  @apply flex justify-center items-center bg-contain bg-no-repeat bg-bottom rounded-lg transition-all duration-500 cursor-pointer;
+  background-color: rgb(252, 245, 243);
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+      rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    transform: scale(1.06);
+    background-color: rgb(253, 198, 183);
+    .category_name {
+      @apply bg-primary_color;
+      color: white;
+      opacity: 1;
+    }
+  }
+}
+
+.category_name {
+  @apply text-center px-4 py-2 text-gray-800 font-bold rounded-md bg-[aliceblue] opacity-70 transition-all duration-500;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
