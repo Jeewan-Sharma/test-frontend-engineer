@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { IProduct } from "@/app/types/IProducts";
 import Icons from "@/app/components/Icons";
 import ProductCounter from "@/app/components/ProductCounter";
 import Button from "@/app/components/Button";
@@ -11,13 +10,41 @@ import Ratings from "@/app/components/Ratings";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { ICartItem } from "@/app/types";
 import { useCart } from "@/app/hooks/useCart";
+import useProductDetails from "@/app/hooks/useProductDetails";
+import { useLoading } from "@/app/context/LoadingContext";
+import Spinner from "@/app/components/Spinner";
 
-const ProductDetailsClient = ({ product }: { product: IProduct }) => {
+const ProductDetailsClient = ({ id }: { id: string }) => {
   const [color, setColor] = useState("black");
   const [size, setSize] = useState("s");
   const [quantity, setQuantity] = useState(1);
 
   const { addToCart } = useCart();
+
+  const { setGlobalLoading } = useLoading();
+
+  const { product, isLoading, error } = useProductDetails(id);
+
+  // Update global loading state when loading state changes
+  useEffect(() => {
+    if (isLoading) {
+      setGlobalLoading(true);
+    } else {
+      setGlobalLoading(false);
+    }
+  }, [isLoading, setGlobalLoading]);
+
+  if (isLoading) {
+    return <Spinner />; // Show the spinner while loading
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
+  if (!product) {
+    return <p>Product not found.</p>;
+  }
 
   const handleAddToCart = () => {
     const productToAdd: ICartItem = {
