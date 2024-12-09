@@ -2,9 +2,7 @@ import React from "react";
 import ProductDetailsClient from "./ProductDetailsClient";
 
 interface PageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 const ProductDetails = async ({ params }: PageProps) => {
